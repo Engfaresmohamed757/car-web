@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الإدارة - PartsHub Egypt</title>
+    <meta name="description" content="لوحة تحكم شاملة لإدارة موقع قطع غيار السيارات">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <i class="fas fa-cog fa-spin"></i>
+            <p>جاري تحميل لوحة التحكم...</p>
+        </div>
+    </div>
+
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-nav-container">
+            <div class="admin-logo">
+                <i class="fas fa-cogs"></i>
+                <span>PartsHub Egypt - Admin</span>
+            </div>
+            
+            <div class="admin-nav-menu">
+                <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    لوحة المعلومات
+                </a>
+                <a href="#products" class="nav-link" data-section="products">
+                    <i class="fas fa-box"></i>
+                    إدارة المنتجات
+                </a>
+                <a href="#orders" class="nav-link" data-section="orders">
+                    <i class="fas fa-shopping-bag"></i>
+                    إدارة الطلبات
+                </a>
+                <a href="#customers" class="nav-link" data-section="customers">
+                    <i class="fas fa-users"></i>
+                    إدارة العملاء
+                </a>
+                <a href="#inventory" class="nav-link" data-section="inventory">
+                    <i class="fas fa-warehouse"></i>
+                    إدارة المخزون
+                </a>
+                <a href="#analytics" class="nav-link" data-section="analytics">
+                    <i class="fas fa-chart-bar"></i>
+                    التحليلات والتقارير
+                </a>
+            </div>
+            
+            <div class="admin-actions">
+                <button class="notification-btn" id="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </button>
+                
+                <div class="admin-user-menu">
+                    <button class="user-btn" id="admin-user-btn">
+                        <i class="fas fa-user-shield"></i>
+                        <span>المدير</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="admin-user-dropdown">
+                        <a href="#profile">
+                            <i class="fas fa-user"></i>
+                            الملف الشخصي
+                        </a>
+                        <a href="#settings">
+                            <i class="fas fa-cog"></i>
+                            الإعدادات
+                        </a>
+                        <a href="index.html">
+                            <i class="fas fa-home"></i>
+                            العودة للموقع
+                        </a>
+                        <a href="#logout" onclick="auth.logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            تسجيل الخروج
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="admin-section active">
+            <div class="section-header">
+                <h1>لوحة المعلومات</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="refreshDashboard()">
+                        <i class="fas fa-sync-alt"></i>
+                        تحديث البيانات
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card sales">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-sales">0 جنيه</div>
+                        <div class="stat-label">إجمالي المبيعات</div>
+                        <div class="stat-change positive">+12.5%</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card orders">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-orders">0</div>
+                        <div class="stat-label">إجمالي الطلبات</div>
+                        <div class="stat-change positive">+8.2%</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card customers">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-customers">0</div>
+                        <div class="stat-label">إجمالي العملاء</div>
+                        <div class="stat-change positive">+15.3%</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card products">
+                    <div class="stat-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-products">0</div>
+                        <div class="stat-label">إجمالي المنتجات</div>
+                        <div class="stat-change neutral">0%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>المبيعات الشهرية</h3>
+                    <canvas id="sales-chart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>أفضل المنتجات مبيعاً</h3>
+                    <canvas id="products-chart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Recent Activities -->
+            <div class="recent-activities">
+                <h3>الأنشطة الأخيرة</h3>
+                <div class="activities-list" id="activities-list">
+                    <!-- Activities will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Management Section -->
+        <section id="products-section" class="admin-section">
+            <div class="section-header">
+                <h1>إدارة المنتجات</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddProductModal()">
+                        <i class="fas fa-plus"></i>
+                        إضافة منتج جديد
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportProducts()">
+                        <i class="fas fa-download"></i>
+                        تصدير البيانات
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label>البحث:</label>
+                    <input type="text" id="product-search" placeholder="ابحث عن منتج...">
+                </div>
+                <div class="filter-group">
+                    <label>الفئة:</label>
+                    <select id="category-filter">
+                        <option value="">جميع الفئات</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>الماركة:</label>
+                    <select id="brand-filter">
+                        <option value="">جميع الماركات</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>حالة المخزون:</label>
+                    <select id="stock-filter">
+                        <option value="">الكل</option>
+                        <option value="in-stock">متوفر</option>
+                        <option value="low-stock">مخزون منخفض</option>
+                        <option value="out-of-stock">غير متوفر</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Products Table -->
+            <div class="table-container">
+                <table class="data-table" id="products-table">
+                    <thead>
+                        <tr>
+                            <th>الصورة</th>
+                            <th>اسم المنتج</th>
+                            <th>الفئة</th>
+                            <th>الماركة</th>
+                            <th>السعر</th>
+                            <th>المخزون</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-tbody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Orders Management Section -->
+        <section id="orders-section" class="admin-section">
+            <div class="section-header">
+                <h1>إدارة الطلبات</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="exportOrders()">
+                        <i class="fas fa-download"></i>
+                        تصدير الطلبات
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Order Filters -->
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label>البحث:</label>
+                    <input type="text" id="order-search" placeholder="رقم الطلب أو اسم العميل...">
+                </div>
+                <div class="filter-group">
+                    <label>الحالة:</label>
+                    <select id="order-status-filter">
+                        <option value="">جميع الحالات</option>
+                        <option value="pending">في الانتظار</option>
+                        <option value="confirmed">مؤكد</option>
+                        <option value="shipped">تم الشحن</option>
+                        <option value="delivered">تم التسليم</option>
+                        <option value="cancelled">ملغي</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>من تاريخ:</label>
+                    <input type="date" id="order-date-from">
+                </div>
+                <div class="filter-group">
+                    <label>إلى تاريخ:</label>
+                    <input type="date" id="order-date-to">
+                </div>
+            </div>
+            
+            <!-- Orders Table -->
+            <div class="table-container">
+                <table class="data-table" id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>رقم الطلب</th>
+                            <th>العميل</th>
+                            <th>التاريخ</th>
+                            <th>المبلغ</th>
+                            <th>الحالة</th>
+                            <th>طريقة الدفع</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody">
+                        <!-- Orders will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Other sections would be added here -->
+    </main>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" id="notifications-panel">
+        <div class="panel-header">
+            <h3>الإشعارات</h3>
+            <button class="close-panel" onclick="closeNotificationsPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notifications-list" id="notifications-list">
+            <!-- Notifications will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/auth-enhanced.js"></script>
+    <script src="js/inventory-enhanced.js"></script>
+    <script src="js/orders-enhanced.js"></script>
+    <script src="js/customer-management.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+    <script src="assets/js/global-features.js"></script>
+    <script src="assets/js/analytics.js"></script>
+    
+    <script>
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check admin access
+            if (!window.auth?.getCurrentUser()?.role === 'admin') {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Initialize admin dashboard
+            if (window.adminDashboard) {
+                window.adminDashboard.loadDashboard();
+            }
+            
+            // Setup navigation
+            setupAdminNavigation();
+            
+            // Load initial data
+            loadDashboardData();
+        });
+        
+        function setupAdminNavigation() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = e.target.dataset.section;
+                    showSection(section);
+                });
+            });
+        }
+        
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(`${sectionName}-section`).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+            
+            // Load section data
+            loadSectionData(sectionName);
+        }
+        
+        function loadSectionData(section) {
+            switch (section) {
+                case 'dashboard':
+                    loadDashboardData();
+                    break;
+                case 'products':
+                    loadProductsData();
+                    break;
+                case 'orders':
+                    loadOrdersData();
+                    break;
+                case 'customers':
+                    loadCustomersData();
+                    break;
+                case 'inventory':
+                    loadInventoryData();
+                    break;
+                case 'analytics':
+                    loadAnalyticsData();
+                    break;
+            }
+        }
+        
+        function loadDashboardData() {
+            // Load dashboard statistics
+            if (window.enhancedInventory) {
+                const stats = window.enhancedInventory.getStockStatistics();
+                document.getElementById('total-products').textContent = stats.total;
+            }
+            
+            if (window.enhancedOrders) {
+                const orderStats = window.enhancedOrders.getOrderStatistics();
+                document.getElementById('total-orders').textContent = orderStats.totalOrders;
+                document.getElementById('total-sales').textContent = `${orderStats.totalRevenue.toLocaleString()} جنيه`;
+            }
+            
+            if (window.customerManagement) {
+                const customerStats = window.customerManagement.getCustomerStatistics();
+                document.getElementById('total-customers').textContent = customerStats.total;
+            }
+        }
+        
+        function loadProductsData() {
+            // Load products table
+            console.log('Loading products data...');
+        }
+        
+        function loadOrdersData() {
+            // Load orders table
+            console.log('Loading orders data...');
+        }
+        
+        function loadCustomersData() {
+            // Load customers data
+            console.log('Loading customers data...');
+        }
+        
+        function loadInventoryData() {
+            // Load inventory data
+            console.log('Loading inventory data...');
+        }
+        
+        function loadAnalyticsData() {
+            // Load analytics data
+            console.log('Loading analytics data...');
+        }
+        
+        function refreshDashboard() {
+            loadDashboardData();
+            showNotification('تم تحديث البيانات بنجاح', 'success');
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Simple notification system
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+    
+    <style>
+        .admin-body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .admin-header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 70px;
+        }
+        
+        .admin-nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            height: 100%;
+        }
+        
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #dc2626;
+        }
+        
+        .admin-nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #64748b;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .admin-main {
+            margin-top: 70px;
+            padding: 2rem;
+        }
+        
+        .admin-section {
+            display: none;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .stat-card.sales .stat-icon { background: #10b981; }
+        .stat-card.orders .stat-icon { background: #3b82f6; }
+        .stat-card.customers .stat-icon { background: #8b5cf6; }
+        .stat-card.products .stat-icon { background: #f59e0b; }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .stat-change {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .stat-change.positive { color: #10b981; }
+        .stat-change.negative { color: #ef4444; }
+        .stat-change.neutral { color: #6b7280; }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #b91c1c;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: 6px;
+            color: white;
+            z-index: 10000;
+        }
+        
+        .notification.success { background: #10b981; }
+        .notification.error { background: #ef4444; }
+        .notification.info { background: #3b82f6; }
+    </style>
+</body>
+</html>

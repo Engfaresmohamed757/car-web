@@ -1,0 +1,40 @@
+{
+  "name": "autozone-egypt",
+  "version": "2.0.0",
+  "description": "AutoZone Egypt - أفضل قطع غيار السيارات الأصلية في مصر",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "dev": "live-server --port=8000",
+    "build": "echo 'Building AutoZone Egypt...'",
+    "test": "echo 'Running tests...'"
+  },
+  "keywords": [
+    "autozone",
+    "car-parts",
+    "spare-parts",
+    "egypt",
+    "automotive",
+    "قطع-غيار",
+    "سيارات",
+    "مصر",
+    "google-signin",
+    "oauth2",
+    "pwa"
+  ],
+  "author": "AutoZone Egypt Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/autozone-egypt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/autozone-egypt/issues"
+  },
+  "homepage": "https://autozone-egypt.com",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {}
+}

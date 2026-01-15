@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Zone Eg- </title>
+    <meta name="description" content="أفضل قطع غيار السيارات الأصلية في مصر. قطع أصلية لجميع الماركات مع توصيل سريع وضمان شامل.">
+    <meta name="keywords" content="قطع غيار مصر, قطع سيارات, تويوتا, هيونداي, كيا, نيسان, BMW, مرسيدس, قطع أصلية, AutoZone">
+    
+    <!-- Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a1a">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <i class="fas fa-car"></i>
+            <p>Loading Auto Zone Eg...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-cogs"></i>
+                    <span>Auto Zone  </span>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link" data-translate="nav.home">Home</a>
+                    <a href="#brands" class="nav-link" data-translate="nav.brands">Brands</a>
+                    <a href="#parts" class="nav-link" data-translate="nav.parts">Parts</a>
+                    <a href="#services" class="nav-link" data-translate="nav.services">Services</a>
+                    <a href="#contact" class="nav-link" data-translate="nav.contact">Contact</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button id="lang-toggle" class="lang-btn">
+                            <i class="fas fa-globe"></i>
+                            <span id="current-lang">EN</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" class="theme-btn">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <!-- Search -->
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Search parts..." data-translate-placeholder="search.placeholder">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- User Authentication -->
+                    <div id="auth-container">
+                        <!-- Auth buttons will be inserted here by auth system -->
+                    </div>
+                    
+                    <!-- Cart -->
+                    <div class="cart-container">
+                        <button class="cart-btn" id="cart-toggle">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cart-count">0</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-video">
+                <video autoplay muted loop>
+                    <source src="./a2ec750b7782086c27b49db76eac122b.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay"></div>
+            </div>
+            
+            <div class="hero-content">
+                <h1 class="hero-title" data-translate="hero.title">قطع غيار السيارات في مصر</h1>
+                <p class="hero-subtitle" data-translate="hero.subtitle">قطع غيار عالية الجودة لجميع ماركات السيارات مع توصيل سريع في جميع أنحاء مصر</p>
+                <button class="cta-btn" id="choose-car-btn" data-translate="hero.cta">اختر سيارتك</button>
+            </div>
+            
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Car Brands Section -->
+        <section id="brands" class="brands-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="brands.title">Choose Your Car Brand</h2>
+                <div class="brands-grid" id="brands-grid">
+                    <!-- Brands will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Car Models Section -->
+        <section id="models" class="models-section" style="display: none;">
+            <div class="container">
+                <h2 class="section-title" data-translate="models.title">Select Your Model</h2>
+                <div class="models-grid" id="models-grid">
+                    <!-- Models will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Spare Parts Section -->
+        <section id="parts" class="parts-section">
+            <div class="container">
+                <div class="parts-header">
+                    <h2 class="section-title" data-translate="parts.title">Spare Parts</h2>
+                    
+                    <!-- Filters -->
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label data-translate="filters.category">Category:</label>
+                            <select id="category-filter">
+                                <option value="" data-translate="filters.all">All Categories</option>
+                                <option value="engine" data-translate="filters.engine">Engine</option>
+                                <option value="brakes" data-translate="filters.brakes">Brakes</option>
+                                <option value="suspension" data-translate="filters.suspension">Suspension</option>
+                                <option value="electrical" data-translate="filters.electrical">Electrical</option>
+                                <option value="body" data-translate="filters.body">Body Parts</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label data-translate="filters.stock">Stock:</label>
+                            <select id="stock-filter">
+                                <option value="" data-translate="filters.all">All</option>
+                                <option value="in-stock" data-translate="filters.inStock">In Stock</option>
+                                <option value="out-of-stock" data-translate="filters.outOfStock">Out of Stock</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="parts-grid" id="parts-grid">
+                    <!-- Parts will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <h2 class="section-title" data-translate="services.title">Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-shipping-fast"></i>
+                        <h3 data-translate="services.delivery.title">Fast Delivery</h3>
+                        <p data-translate="services.delivery.desc">Same day delivery in Cairo and Giza</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-tools"></i>
+                        <h3 data-translate="services.installation.title">Installation Service</h3>
+                        <p data-translate="services.installation.desc">Professional installation by certified mechanics</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3 data-translate="services.warranty.title">Warranty</h3>
+                        <p data-translate="services.warranty.desc">1 year warranty on all genuine parts</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-headset"></i>
+                        <h3 data-translate="services.support.title">24/7 Support</h3>
+                        <p data-translate="services.support.desc">Round the clock customer support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 data-translate="cart.title">Shopping Cart</h3>
+            <button class="cart-close" id="cart-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be loaded dynamically -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span data-translate="cart.total">Total: </span>
+                <span id="cart-total-amount">0 EGP</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn" data-translate="cart.checkout">Checkout</button>
+            <button class="whatsapp-order-btn" id="whatsapp-order-btn">
+                <i class="fab fa-whatsapp"></i>
+                <span data-translate="cart.whatsapp">Order via WhatsApp</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="notifications" id="notifications"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AutoZone Egypt</h3>
+                    <p data-translate="footer.desc">شريكك الموثوق لقطع غيار السيارات الأصلية في مصر</p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-translate="footer.contact">Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +20 101 051 4741</p>
+                    <p><i class="fas fa-envelope"></i> info@autoparts-egypt.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Cairo, Egypt</p>
+                    <div class="working-hours">
+                        <h5>ساعات العمل</h5>
+                        <p>السبت - الخميس: 9:00 ص - 10:00 م</p>
+                        <p>الجمعة: 2:00 م - 10:00 م</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4 data-translate="footer.social">Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AutoZone Egypt. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Panel Button (Hidden by default) -->
+    <button class="admin-panel-btn" id="admin-panel-btn" style="display: none;">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/image-manager.js"></script>
+    <script src="js/auth-enhanced.js"></script>
+    <script src="js/inventory-enhanced.js"></script>
+    <script src="js/orders-enhanced.js"></script>
+    <script src="js/payment-enhanced.js"></script>
+    <script src="js/customer-management.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+    <script src="js/header-enhancements.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/whatsapp-chat.js"></script>
+    <script src="assets/js/global-features.js"></script>
+    <script src="assets/js/seo-optimizer.js"></script>
+    <script src="assets/js/analytics.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

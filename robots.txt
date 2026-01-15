@@ -1,0 +1,106 @@
+# Robots.txt for AutoParts Egypt - Global Version
+
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /cache/
+Disallow: /logs/
+
+# Allow important directories
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Disallow search result pages to prevent duplicate content
+Disallow: /search?
+Disallow: /*?search=
+Disallow: /*?filter=
+Disallow: /*?sort=
+
+# Disallow cart and checkout pages (private user data)
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account
+Disallow: /profile
+
+# Allow specific important pages
+Allow: /brands
+Allow: /parts
+Allow: /services
+Allow: /contact
+Allow: /about
+Allow: /shipping
+Allow: /returns
+Allow: /faq
+Allow: /blog
+
+# Sitemap location
+Sitemap: https://autoparts-egypt.com/sitemap.xml
+
+# Crawl delay for different bots
+User-agent: Googlebot
+Crawl-delay: 1
+
+User-agent: Bingbot
+Crawl-delay: 2
+
+User-agent: Slurp
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Crawl-delay: 3
+
+User-agent: YandexBot
+Crawl-delay: 2
+
+# Block aggressive crawlers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Allow social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# Special rules for image crawlers
+User-agent: Googlebot-Image
+Allow: /assets/images/
+Allow: /images/
+Disallow: /assets/images/private/
+
+# Mobile crawler
+User-agent: Googlebot-Mobile
+Allow: /
+
+# News crawler
+User-agent: Googlebot-News
+Allow: /blog/
+Allow: /news/
+
+# Video crawler
+User-agent: Googlebot-Video
+Allow: /assets/videos/
+Disallow: /assets/videos/private/
